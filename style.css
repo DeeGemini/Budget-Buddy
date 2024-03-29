@@ -89,3 +89,109 @@ form button {
     font-family: "Poppins", sans-serif;
     font-size: 1rem;
 }
+
+form button {
+    background-color: var(--main-color);
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    box-shadow: #1d1f27;
+}
+
+form label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+form div:nth-child(-n + 2) {
+    flex-basis: 100%;
+}
+
+form div:nth-child(n + 3) {
+    flex-basis: calc(50% - 5px);
+}
+
+input#type {
+    appearance: none;
+    position: absolute;
+}
+
+.option {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    background: #eee;
+    border-radius: 5px;
+    position: relative;
+}
+
+.option span {
+    width: 50%;
+    text-align: center;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.option::before {
+    content: "";
+    position: absolute;
+    top: 5px;
+    left: 0;
+    background-color: #fff;
+    height: calc(100% - 10px);
+    width: calc(50% - 10px);
+    transform: translateX(5px);
+    border-radius: inherit;
+    box-shadow: #1d1f27;
+    transition: all 200ms;
+}
+
+input#type:checked ~ .option::before {
+    left: 50%;
+}
+
+ul {
+    list-style-type: none;
+}
+
+ul li {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 5px 10px;
+    position: relative;
+}
+
+ul li:hover {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.name {
+    flex: 1;
+}
+
+.name h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.name p {
+    font-size: 0.8rem;
+    color: #555;
+}
+
+.amount {
+    font-weight: 600;
+}
+
+.amount.income {
+    color: aqua;
+}
+
+.amount.expense {
+    color: rgb(242, 255, 0);
+}
