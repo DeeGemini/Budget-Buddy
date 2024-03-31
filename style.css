@@ -2,7 +2,7 @@
 
 :root {
     --bg-color: #f6f8fa;
-    --tetx-color: #1d1f27;
+    --tetx-color: #232a47;
     --main-color: #3a3dbe;
 }
 
@@ -10,7 +10,7 @@
 * {
     padding: 0;
     margin: 0;
-    box-sizing: border-box
+    box-sizing: border-box;
 }
 
 body {
@@ -22,7 +22,7 @@ body {
 
 h1 {
     text-align: center;
-    font: 1.5rem;
+    font-size: 1.5rem;
 }
 
 h3,

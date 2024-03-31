@@ -1,17 +1,17 @@
-const transactions = JSON.parse(localStorage.getItem("transaction")) || [];
+const transactions = JSON.parse(localStorage.getItem("transactions")) || [];
 
 const formatter = new Intl.NumberFormat("en-UK", {
     style: "currency",
-    currency: "ZAR, USD",
+    currency: "USD",
     signDisplay: "always",
-})
+});
 
 const list = document.getElementById("transactionList");
 const form = document.getElementById("transactionForm");
 const status = document.getElementById("status");
 const balance = document.getElementById("balance");
 const income = document.getElementById("income");
-const expense = document.getElementById("expense");
+const expenses = document.getElementById("expenses");
 
 form.addEventListener("submit", addTransaction);
 
@@ -21,14 +21,14 @@ function updateTotal() {
     .reduce((total, trx) => total + trx.amount, 0);
 
     const expenseTotal = transactions
-    .filter((trx) => trx.type === "expense")
+    .filter((trx) => trx.type === "expenses")
     .reduce((total, trx) => total + trx.amount, 0);
 
     const balanceTotal = incomeTotal - expenseTotal;
 
     balance.textContent = formatter.format(balanceTotal).substring(1);
     income.textContent = formatter.format(incomeTotal);
-    expense.textContent = formatter.format(expenseTotal * -1);
+    expenses.textContent = formatter.format(expenseTotal * -1);
 }
 
 function renderList() {
@@ -41,14 +41,14 @@ function renderList() {
     }
     
     transactions.forEach(({ id, name, amount, date, type }) => {
-        const sign = "income" === type ? 1 : -1;
+        const multiplier = type === "income" ? 1 : -1;
 
         const li = document.createElement("li");
 
         li.innerHTML = `
         <div class="name">
             <h4>${name}</h4>
-            <p>${new Date(date).toLocaleDateString()}</p>
+            <p>${date.toLocaleDateString()}</p>
         </div>
 
         <div class="amount ${type}">
@@ -81,14 +81,14 @@ function deleteTransaction(id) {
 function addTransaction(e) {
     e.preventDefault();
 
-    const formDatac= new FormData(this);
+    const formData = new FormData(this);
 
     transactions.push({
         id: transactions.length + 1,
         name: formData.get("name"),
         amount: parseFloat(formData.get("amount")),
         date: new Date(formData.get("date")),
-        type: "on" === formData.get("type") ? "income" : "expense",
+        type: formData.get("type") === "on" ? "income" : "expenses",
     });
 
     this.reset();
