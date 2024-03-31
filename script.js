@@ -65,4 +65,42 @@ function renderList() {
         list.appendChild(li);
     });
 }
+
+renderList();
+updateTotal();
+
+function deleteTransaction(id) {
+    const index = transactions.findIndex((trx) => trx.id === id);
+    transactions.splice(index, 1);
+
+    updateTotal();
+    saveTransactions();
+    renderList();
+}
+
+function addTransaction(e) {
+    e.preventDefault();
+
+    const formDatac= new FormData(this);
+
+    transactions.push({
+        id: transactions.length + 1,
+        name: formData.get("name"),
+        amount: parseFloat(formData.get("amount")),
+        date: new Date(formData.get("date")),
+        type: "on" === formData.get("type") ? "income" : "expense",
+    });
+
+    this.reset();
+
+    updateTotal();
+    saveTransactions();
+    renderList();
+}
+
+function saveTransactions() {
+    transactions.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+    localStorage.setItem("transactions" , JSON.stringify(transactions));
+}
    
