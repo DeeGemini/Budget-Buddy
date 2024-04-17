@@ -1,18 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <!-- Meta tags for character set, compatibility, and viewport settings -->
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Title of the webpage -->
     <title>Expense Tracker</title>
+    <!-- Link to external CSS file for styling -->
     <link rel="stylesheet" href="style.css" />
+    <!-- Link to external JavaScript file for functionality -->
     <script type="module" scr="script.js"></script>
   </head>
   
   <body>
     <main>
+    <!-- Main heading for the webpage -->
     <h1>Budget~Buddy</h1>
       <header>
+        <!-- Display total balance, income, and expenses -->
         <div>
           <h5>Total Balance</h5>
           <span id="balance">$0.00</span>
@@ -28,15 +34,18 @@
       </header>
 
       <section>
+        <!-- Display list of transactions -->
         <h3>Transactions</h3>
         <ul id="transactionList"></ul>
         <div id="status"></div>
       </section>
 
       <section>
+        <!-- Form to add a new transaction -->
         <h3>Add Transaction</h3>
 
         <form id="transactionForm">
+          <!-- Checkbox to select expense or income -->
           <div>
             <label for="type">
               <input type="checkbox" name="type" id="type" />
@@ -46,6 +55,7 @@
               </div>
             </label>
           </div>
+          <!-- Input fields for transaction details -->
           <div>
             <label for="name">Name</label>
             <input type="text" name="name" required />
@@ -65,11 +75,13 @@
             <label for="date">Date</label>
             <input type="date" name="date" required />
           </div>
+          <!-- Submit button for the form -->
           <button type="submit">Submit</button>
         </form>
       </section>
     </main>
 
+    <!-- Link to external JavaScript file for functionality -->
     <script src="script.js"></script>
   </body>
 </html>
