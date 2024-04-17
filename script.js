@@ -1,11 +1,14 @@
+// Retrieve transactions from localStorage or initialize an empty array
 const transactions = JSON.parse(localStorage.getItem("transactions")) || [];
 
+// Formatter for currency display
 const formatter = new Intl.NumberFormat("en-US", {
   style: "currency",
   currency: "USD",
   signDisplay: "always",
 });
 
+// DOM elements
 const list = document.getElementById("transactionList");
 const form = document.getElementById("transactionForm");
 const status = document.getElementById("status");
@@ -13,38 +16,46 @@ const balance = document.getElementById("balance");
 const income = document.getElementById("income");
 const expense = document.getElementById("expense");
 
+// Event listener for form submission
 form.addEventListener("submit", addTransaction);
 
+// Function to update total balance, income, and expenses
 function updateTotal() {
+  // Calculate total income
   const incomeTotal = transactions
     .filter((trx) => trx.type === "income")
     .reduce((total, trx) => total + trx.amount, 0);
 
+  // Calculate total expenses
   const expenseTotal = transactions
     .filter((trx) => trx.type === "expense")
     .reduce((total, trx) => total + trx.amount, 0);
 
+  // Calculate balance 
   const balanceTotal = incomeTotal - expenseTotal;
 
-  balance.textContent = formatter.format(balanceTotal).substring(1);
+  // Update DOM with formatted values
+  balance.textContent = formatter.format(balanceTotal).substring(1); // Remove currency symbol from balance
   income.textContent = formatter.format(incomeTotal);
-  expense.textContent = formatter.format(expenseTotal * -1);
+  expense.textContent = formatter.format(expenseTotal * -1); // Display expenses as negative values
 }
 
+// Function to render transaction list
 function renderList() {
-  list.innerHTML = "";
+  list.innerHTML = ""; // Clear previous list
 
   status.textContent = "";
   if (transactions.length === 0) {
-    status.textContent = "No transactions.";
+    status.textContent = "No transactions."; // Display message if no transactions
     return;
   }
-
+  // Iterate through transactions and create list items
   transactions.forEach(({ id, name, amount, date, type }) => {
     const sign = "income" === type ? 1 : -1;
 
     const li = document.createElement("li");
 
+    // Populate list item HTML
     li.innerHTML = `
       <div class="name">
         <h4>${name}</h4>
@@ -62,27 +73,31 @@ function renderList() {
       </div>
     `;
 
-    list.appendChild(li);
+    list.appendChild(li); // Append list item to the list
   });
 }
 
+// Initial rendering of list and updating totals
 renderList();
 updateTotal();
 
+// Function to delete a transaction
 function deleteTransaction(id) {
   const index = transactions.findIndex((trx) => trx.id === id);
-  transactions.splice(index, 1);
+  transactions.splice(index, 1); // Remove transaction from array
 
-  updateTotal();
-  saveTransactions();
-  renderList();
+  updateTotal(); // Update totals
+  saveTransactions(); // Save updated transactions to localStorage
+  renderList(); // Re-render transaction list
 }
 
+// Function to add a new transaction
 function addTransaction(e) {
   e.preventDefault();
 
   const formData = new FormData(this);
 
+  // Create new transaction object and add to transactions array
   transactions.push({
     id: transactions.length + 1,
     name: formData.get("name"),
@@ -91,15 +106,16 @@ function addTransaction(e) {
     type: "on" === formData.get("type") ? "income" : "expense",
   });
 
-  this.reset();
+  this.reset(); // Reset form fields
 
-  updateTotal();
-  saveTransactions();
-  renderList();
+  updateTotal(); // Updates totals
+  saveTransactions(); // Save update transactions to localStorage
+  renderList(); // Re-render transaction list
 }
 
+// Function to save transactions to localStorage
 function saveTransactions() {
-  transactions.sort((a, b) => new Date(b.date) - new Date(a.date));
+  transactions.sort((a, b) => new Date(b.date) - new Date(a.date)); // Sort transactions by date
 
-  localStorage.setItem("transactions", JSON.stringify(transactions));
+  localStorage.setItem("transactions", JSON.stringify(transactions)); // Save transactions to localStorage
 }
